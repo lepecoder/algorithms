@@ -23,11 +23,11 @@ from typing import List
 
 
 def bubble_sort(arr: List[int]) -> None:
-    n = len(arr)-1
+    n = len(arr) - 1
     for i in range(n):
-        for j in range(n-i):
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j]
+        for j in range(n - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
 
 num = random.choices(range(100), k=20)  # 生成随机数
