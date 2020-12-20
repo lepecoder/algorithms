@@ -31,6 +31,7 @@
 # 
 #
 
+#%%
 # @lc code=start
 class Solution:
     def integerBreak(self, n: int) -> int:
@@ -39,6 +40,9 @@ class Solution:
             for j in range(i):
                 dp[i] = max(dp[i], j*(i-j), j*dp[i-j])
         return dp[n]
+
+so = Solution()
+print(so.integerBreak(5))
         
 # @lc code=end
 
