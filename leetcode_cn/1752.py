@@ -9,6 +9,8 @@ class Solution:
         # for i,v in enumerate(nums):
         #     if min_v < v
         n = len(nums)
+        if n <= 2:
+            return True
         ans = False
         for i in range(n):
             t = nums[i]
