@@ -44,7 +44,6 @@
 #
 #
 # %%
-from typing import List
 # @lc code=start
 
 
