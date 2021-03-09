@@ -64,4 +64,25 @@ from typing import List
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
         # 从左上角到右下角，用动态规划的方法，
-        # @lc code=end
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+        return self.f(obstacleGrid, m - 1, n - 1)
+
+    def f(self, obstacleGrid, i, j):
+        if obstacleGrid[i][j] == 1:
+            return 0
+        if i == 0 and j == 0:
+            return 1
+        if i < 0 or j < 0:
+            return 0
+        # 自顶向下的方法，有重复计算
+        return self.f(obstacleGrid, i - 1, j) + self.f(obstacleGrid, i, j - 1)
+
+
+so = Solution()
+obs = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+obs = [[1]]
+
+print(so.uniquePathsWithObstacles(obs))
+
+# @lc code=end
