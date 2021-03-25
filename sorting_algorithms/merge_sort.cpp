@@ -74,7 +74,6 @@ template <typename T> void merge_sort_iteration(T arr[], int len) {
     for (int start = 0; start < len; start += 2 * seg) {
       int low = start, mid = min(start + seg, len),
           high = min(start + seg + seg, len); // 不包含右边界
-      cout << low << ' ' << mid << ' ' << high << endl;
       int k = low;
       int s1 = low, e1 = mid;
       int s2 = mid, e2 = high;
