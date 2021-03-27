@@ -69,26 +69,23 @@ class Solution:
         # 从左上角到右下角，用动态规划的方法，
         m = len(obstacleGrid)
         n = len(obstacleGrid[0])
-        global dp
-        dp = [[-1] * n for _ in range(m)]
         return self.f(obstacleGrid, m - 1, n - 1)
 
     def f(self, obstacleGrid, i, j):
+        if obstacleGrid[i][j] == 1:
+            return 0
+        if i == 0 and j == 0:
+            return 1
         if i < 0 or j < 0:
             return 0
-        elif dp[i][j] != -1:
-            return dp[i][j]
-        if obstacleGrid[i][j] == 1:
-            dp[i][j] = 0
-            # return 0
-        elif i == 0 and j == 0:
-            dp[i][j] = 1
-            # return 1
-        else:
-            dp[i][j] = self.f(obstacleGrid, i - 1, j) + self.f(obstacleGrid, i, j - 1)
-        return dp[i][j]
+        # 自顶向下的方法，有重复计算
+        return self.f(obstacleGrid, i - 1, j) + self.f(obstacleGrid, i, j - 1)
 
 
 so = Solution()
 obs = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+obs = [[1]]
+
 print(so.uniquePathsWithObstacles(obs))
+
+# @lc code=end
