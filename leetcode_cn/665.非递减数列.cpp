@@ -46,7 +46,6 @@ public:
 };
 // @lc code=end
 
-<<<<<<< HEAD
 int main() {
   vector<int> v = {4, 2, 1};
   Solution so;
@@ -55,5 +54,3 @@ int main() {
   cout << ans;
   return 0;
 }
-== == == = int main() { return 0; }
->>>>>>> b851513ce1a0d33e78194352ca8d9d6827a44519
