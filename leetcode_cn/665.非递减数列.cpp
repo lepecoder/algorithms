@@ -9,38 +9,44 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
+  int isPossi(vector<int> &nums) {
+    //  检查是否是非递减序列
+    // 返回第一个不是递减的数字的位置
+    // 如果是递减序列，返回-1
+    int idx = 0, n = nums.size();
+    while (idx < n - 1 && nums[idx] <= nums[idx + 1]) {
+      ++idx;
+    }
+    if (idx == n - 1)
+      return -1;
+    return idx;
+  }
   bool checkPossibility(vector<int> &nums) {
-    //   找第一个不符合递增的位置
-    int k = 0, n = nums.size();
-    if (n == 1)
+
+    int n = nums.size();
+    if (n < 3)
       return true;
-    while (k < n - 1 && nums[k] <= nums[k + 1])
-      ++k;
-    // 此时k之前的都是非递减，有可能去掉k，也有可能去掉k+1
-    // 此时需要考虑 k-1, k, k+1, k+2
-    // 如果k=n-1，返回true
-    if (k == n - 1 || k == n - 2)
+    int idx = isPossi(nums);
+    if (idx == -1)
       return true;
-    // 如果去掉k
-    int temp = nums[k];
-    nums[k] = k == 0 ? nums[k + 1] : nums[k - 1];
-    int t = k;
-    while (k < n - 1 && nums[k] <= nums[k + 1])
-      ++k;
-    if (k == n - 2)
+    int temp = nums[idx];
+    nums[idx] = idx == 0 ? nums[idx + 1] : nums[idx - 1];
+    int t = isPossi(nums);
+    if (t == -1)
       return true;
-    // 如果去掉k+1
-    nums[t] = temp;
-    nums[t + 1] = temp;
-    while (t < n - 1 && nums[t] <= nums[t + 1])
-      ++t;
-    if (t == n - 2)
+    nums[idx] = temp;
+    if (idx == n - 1)
+      return false;
+    nums[idx + 1] = temp;
+    t = isPossi(nums);
+    if (t == -1)
       return true;
     return false;
   }
 };
 // @lc code=end
 
+<<<<<<< HEAD
 int main() {
   vector<int> v = {4, 2, 1};
   Solution so;
@@ -49,3 +55,5 @@ int main() {
   cout << ans;
   return 0;
 }
+== == == = int main() { return 0; }
+>>>>>>> b851513ce1a0d33e78194352ca8d9d6827a44519
