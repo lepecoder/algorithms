@@ -46,4 +46,11 @@ public:
 };
 // @lc code=end
 
-int main() { return 0; }
+int main() {
+  vector<int> v = {4, 2, 1};
+  Solution so;
+
+  auto ans = so.checkPossibility(v);
+  cout << ans;
+  return 0;
+}

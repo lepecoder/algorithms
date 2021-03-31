@@ -5,7 +5,5 @@ a = np.median(x)
 print(type(a))
 
 # %%
-h = 2
-m = 3
-s = "%2d:%02d" % (h, m)
-print(s)
+凤元东 = "2b"
+print(凤元东)
