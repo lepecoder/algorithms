@@ -38,10 +38,18 @@ class Solution {
 // @lc code=end
 
 int main() {
-    //
+<<<<<<< HEAD
     Solution so;
+    vector<int> v = {3, 2, 3, 1, 2, 4, 5, 5, 6};
+    int ans = so.findKthLargest(v, 4);
+    cout << ans;
+    return 0;
+    == == == =
+                 //
+        Solution so;
     vector<int> v{3, 2, 3, 1, 2, 4, 5, 5, 6};
     int ans = so.findKthLargest(v, 4);
     cout << ans;
     return 0;
+>>>>>>> ea5bfb5ceeea71c48227331faa52d37f82791d85
 }
