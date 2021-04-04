@@ -2,13 +2,10 @@
 using namespace std;
 
 int main() {
-    //
-    int a = 0;
-    if (a == 0)
-        return 2;
-    else if (a == 1) {
-        return a;
-    } else
-        return 1;
+    int n = 2;
+    int a[n][n];
+    a[0][1] = 2;
+    a[1][1] = 1;
+    cout << a[0][1] << ' ' << a[1][1] << endl;
     return 0;
 }
