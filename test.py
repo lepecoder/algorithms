@@ -5,5 +5,7 @@ a = np.median(x)
 print(type(a))
 
 # %%
-凤元东 = "2b"
-print(凤元东)
+min_ = -2**31
+max_ = 2**31 - 1
+print(min_)
+print(max_)
