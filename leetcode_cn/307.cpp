@@ -34,12 +34,16 @@ class NumArray {
     void update_tree(int tr[], int node, int start, int end, int idx, int val) {
         /*
         修改线段树
-        将下标idx改为val
+        将下标idx改为val,node是线段树节点序号，start和end是线段树节点在原数组的范围
          */
-        if (start == end) { tr[node] = val; }
+        if (start == end) {
+            tr[node] = val;
+            return;
+        }
         int mid = (start + end) / 2;
         int left_node = 2 * node + 1;
         int right_node = 2 * node + 2;
+        if (idx < start || idx > end) return;
         if (start <= idx && idx <= mid) { // 修改左分支
             update_tree(tr, left_node, start, mid, idx, val);
         } else { // 修改右分支
@@ -67,16 +71,19 @@ class NumArray {
             return sum_left + sum_right;
         }
     }
-    int tr[120000];
+    // int tr[120000];
+    int *tr;
     int n;
 
   public:
     NumArray(vector<int> &nums) {
         /* 使用nums初始化线段树，下标从0开始 */
         n = nums.size();
+        tr = new int(n * 4);
         memset(tr, 0, sizeof(tr));
         build_tree(nums, tr, 0, 0, n - 1);
     }
+    ~NumArray() { delete[] tr; }
 
     void update(int index, int val) {
         /* 更新对象中的值 */
@@ -99,6 +106,11 @@ class NumArray {
 // @lc code=end
 
 int main() {
-    //
+    vector<int> v{1, 3, 5};
+    NumArray na(v);
+    cout << na.sumRange(0, 2);
+    na.update(1, 2);
+    cout << na.sumRange(0, 2);
+
     return 0;
 }
