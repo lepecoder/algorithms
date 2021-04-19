@@ -5,33 +5,38 @@
  */
 #include <bits/stdc++.h>
 using namespace std;
-
-// @lc code=start
-class NumArray {
-    /* 两类操作
-    1. 更新数组下标对应的值
-    2. 返回某个范围内的元素总和
-    // 但节点修改的线段树，不需要设置懒标记
-    */
+class SegmentTree {
   private:
-    void build_tree(vector<int> &nums, int tr[], int node, int start, int end) {
+    int *tr;
+    const vector<int> *arr;
+
+  public:
+    SegmentTree(const vector<int> &nums) {
+        int n = nums.size();
+        arr = &nums;
+        tr = new int[4 * n];
+        memset(tr, 0, sizeof(tr));
+        build_tree(0, 0, n - 1);
+    }
+    ~SegmentTree() { delete[] tr; }
+    void build_tree(int node, int start, int end) {
         /*
         建立线段树
         node是要建立的当前节点，start和end是节点的范围,两端包含
         注意：下标从0开始
         */
-        if (start == end) { // 建立当前节点
-            tr[node] = nums[start];
+        if (start == end) {
+            tr[node] = arr->at(start);
         } else {
             int left_node = 2 * node + 1;
             int right_node = 2 * node + 2;
             int mid = (start + end) / 2;
-            build_tree(nums, tr, left_node, start, mid);
-            build_tree(nums, tr, right_node, mid + 1, end);
+            build_tree(left_node, start, mid);
+            build_tree(right_node, mid + 1, end);
             tr[node] = tr[left_node] + tr[right_node];
         }
     }
-    void update_tree(int tr[], int node, int start, int end, int idx, int val) {
+    void update_tree(int node, int start, int end, int idx, int val) {
         /*
         修改线段树
         将下标idx改为val,node是线段树节点序号，start和end是线段树节点在原数组的范围
@@ -43,56 +48,64 @@ class NumArray {
         int mid = (start + end) / 2;
         int left_node = 2 * node + 1;
         int right_node = 2 * node + 2;
-        if (idx < start || idx > end) return;
-        if (start <= idx && idx <= mid) { // 修改左分支
-            update_tree(tr, left_node, start, mid, idx, val);
-        } else { // 修改右分支
-            update_tree(tr, right_node, mid + 1, end, idx, val);
+        if (idx < start || idx > end) { // 节点范围不包含idx
+            return;
+        }
+        if (start <= idx && idx <= mid) { // idx位于左分支
+            update_tree(left_node, start, mid, idx, val);
+        } else { // idx位于右分支
+            update_tree(right_node, mid + 1, end, idx, val);
         }
         tr[node] = tr[left_node] + tr[right_node];
     }
-    int query_tree(int tr[], int node, int start, int end, int L, int R) {
+    int query_tree(int node, int start, int end, int L, int R) {
         /*
         线段树查询，
         查询区间L,R的和，两端包含
          */
-        if (R < start || L > end)
+        if (R < start || L > end) // node不在求和范围
             return 0;
         else if (start == end)
             return tr[node];
-        else if (start >= L && end <= R)
+        else if (start >= L && end <= R) {
             return tr[node];
-        else {
+        } else {
             int mid = (start + end) / 2;
             int left_node = 2 * node + 1;
             int right_node = 2 * node + 2;
-            int sum_left = query_tree(tr, left_node, start, mid, L, R);
-            int sum_right = query_tree(tr, right_node, mid + 1, end, L, R);
+            int sum_left = query_tree(left_node, start, mid, L, R);
+            int sum_right = query_tree(right_node, mid + 1, end, L, R);
             return sum_left + sum_right;
         }
     }
-    // int tr[120000];
-    int *tr;
+};
+// @lc code=start
+class NumArray {
+    /* 两类操作
+    1. 更新数组下标对应的值
+    2. 返回某个范围内的元素总和
+    // 但节点修改的线段树，不需要设置懒标记
+    */
+  private:
     int n;
+    SegmentTree *sg;
 
   public:
     NumArray(vector<int> &nums) {
         /* 使用nums初始化线段树，下标从0开始 */
         n = nums.size();
-        tr = new int(n * 4);
-        memset(tr, 0, sizeof(tr));
-        build_tree(nums, tr, 0, 0, n - 1);
+        sg = new SegmentTree(nums);
     }
-    ~NumArray() { delete[] tr; }
+    ~NumArray() { delete sg; }
 
     void update(int index, int val) {
         /* 更新对象中的值 */
-        update_tree(tr, 0, 0, n - 1, index, val);
+        sg->update_tree(0, 0, n - 1, index, val);
     }
 
     int sumRange(int left, int right) {
         /* 区域求和 */
-        int res = query_tree(tr, 0, 0, n - 1, left, right);
+        int res = sg->query_tree(0, 0, n - 1, left, right);
         return res;
     }
 };
