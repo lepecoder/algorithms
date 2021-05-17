@@ -16,27 +16,23 @@ using namespace std;
 void quick_sort(vector<int> &, int, int);
 
 int main(int argc, char const *argv[]) {
-  vector<int> v = {2, 1, 5, 6, 3, 7, 4, 9, 8, 0};
-  quick_sort(v, 0, 9);
-  for (int i = 0; i < 10; i++)
-    cout << v[i] << ' ';
-  cout << endl;
-  return 0;
+    vector<int> v = {2, 1, 5, 6, 3, 7, 4, 9, 8, 0};
+    quick_sort(v, 0, 9);
+    for (int i = 0; i < 10; i++) cout << v[i] << ' ';
+    cout << endl;
+    return 0;
 }
 
 void quick_sort(vector<int> &nums, int l, int r) {
-  if (l + 1 >= r)
-    return;
-  int first = l, last = r, key = nums[first];
-  while (first < last) { // 利用双指针交替交换元素
-    while (first < last && nums[last] >= key)
-      --last;                 // 从后向前找到第一个小于key的元素
-    nums[first] = nums[last]; // 此时nums[first]并不会丢失，因为被key记录
-    while (first < last && nums[first] <= key)
-      ++first;
-    nums[last] = nums[first]; // 此时last也不会丢失，因为在上一步已经记录
-    nums[first] = key;
-    quick_sort(nums, l, first);
-    quick_sort(nums, first + 1, r);
-  }
+    if (l + 1 >= r) return;
+    int first = l, last = r, key = nums[first];
+    while (first < last) {                                // 利用双指针交替交换元素
+        while (first < last && nums[last] >= key) --last; // 从后向前找到第一个小于key的元素
+        nums[first] = nums[last];                         // 此时nums[first]并不会丢失，因为被key记录
+        while (first < last && nums[first] <= key) ++first;
+        nums[last] = nums[first]; // 此时last也不会丢失，因为在上一步已经记录
+        nums[first] = key;
+        quick_sort(nums, l, first);
+        quick_sort(nums, first + 1, r);
+    }
 }
