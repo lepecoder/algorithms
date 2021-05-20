@@ -8,59 +8,112 @@ int _IO = []() {
     return 0;
 }();
 class Solution {
-  private:
-    string s;
-    int filter_blank(int idx) {
-        if (idx == s.length()) return idx;
-        while (idx < s.length() && s[idx] == ' ') idx++;
-        return idx;
-    }
-    int filter_num(int idx) {
-        /* 过滤整数 */
-        if (s[idx] == '+' || s[idx] == '-') {
-            idx++;
-            if (idx >= s.length() || s[idx] < '0' || s[idx] > '9') return 0;
-        }
-
-        while (idx < s.length() && s[idx] >= '0' && s[idx] <= '9') idx++;
-        return idx;
-    }
-    int filter_float(int idx) {
-        /* 过滤小数 */
-        return idx;
-    }
-
   public:
-    bool isNumber(string s) {
-        int idx = 0;
-        this->s = s;
-        // 1. 若干空格
-        idx = filter_blank(idx);
-        // 2. 一个小数或整数
-        int idx1 = filter_num(idx);
-        if (idx1 < s.length() && s[idx1] == '.') {
-            // 小数点后不跟正负号
-            if (s[idx1 + 1] == '+' || s[idx1 + 1] == '-') return false;
-            int idx2 = filter_num(idx1 + 1);
-            if (idx1 == idx && idx2 == idx1 + 1) return false;
-            idx = idx2;
+    enum State {
+        STATE_INITIAL,
+        STATE_INT_SIGN,
+        STATE_INTEGER,
+        STATE_POINT,
+        STATE_POINT_WITHOUT_INT,
+        STATE_FRACTION,
+        STATE_EXP,
+        STATE_EXP_SIGN,
+        STATE_EXP_NUMBER,
+        STATE_END,
+    };
+    enum CharType {
+        CHAR_NUMBER,
+        CHAR_EXP,
+        CHAR_POINT,
+        CHAR_SIGN,
+        CHAR_SPACE,
+        CHAR_ILLEGAL,
+    };
+
+    CharType toCharType(char ch) {
+        if (ch >= '0' && ch <= '9') {
+            return CHAR_NUMBER;
+        } else if (ch == 'e' || ch == 'E') {
+            return CHAR_EXP;
+        } else if (ch == '.') {
+            return CHAR_POINT;
+        } else if (ch == '+' || ch == '-') {
+            return CHAR_SIGN;
+        } else if (ch == ' ') {
+            return CHAR_SPACE;
         } else {
-            if (idx1 == idx) return false;
-            idx = idx1;
+            return CHAR_ILLEGAL;
         }
-        if (idx == s.length()) return true;
-        // 3. (可选的)一个'e'或'E'，+ 整数
-        if (s[idx] == 'e' || s[idx] == 'E') {
-            int idx2 = filter_num(idx + 1);
-            if (idx2 == idx + 1) return false;
-            idx = idx2;
-        }
-        if (idx == s.length()) return true;
-        // 若干空格
-        idx = filter_blank(idx);
-        return idx == s.length();
     }
-};
+    bool isNumber(string s) {
+        unordered_map<State, unordered_map<CharType, State>> transfer{{STATE_INITIAL,
+                                                                       {
+                                                                           {CHAR_SPACE, STATE_INITIAL},
+                                                                           {CHAR_NUMBER, STATE_INTEGER},
+                                                                           {CHAR_POINT, STATE_POINT_WITHOUT_INT},
+                                                                           {CHAR_SIGN, STATE_INT_SIGN},
+                                                                       }},
+                                                                      {STATE_INT_SIGN,
+                                                                       {
+                                                                           {CHAR_NUMBER, STATE_INTEGER},
+                                                                           {CHAR_POINT, STATE_POINT_WITHOUT_INT},
+                                                                       }},
+                                                                      {STATE_INTEGER,
+                                                                       {
+                                                                           {CHAR_NUMBER, STATE_INTEGER},
+                                                                           {CHAR_EXP, STATE_EXP},
+                                                                           {CHAR_POINT, STATE_POINT},
+                                                                           {CHAR_SPACE, STATE_END},
+                                                                       }},
+                                                                      {STATE_POINT,
+                                                                       {
+                                                                           {CHAR_NUMBER, STATE_FRACTION},
+                                                                           {CHAR_EXP, STATE_EXP},
+                                                                           {CHAR_SPACE, STATE_END},
+                                                                       }},
+                                                                      {STATE_POINT_WITHOUT_INT,
+                                                                       {
+                                                                           {CHAR_NUMBER, STATE_FRACTION},
+                                                                       }},
+                                                                      {STATE_FRACTION,
+                                                                       {
+                                                                           {CHAR_NUMBER, STATE_FRACTION},
+                                                                           {CHAR_EXP, STATE_EXP},
+                                                                           {CHAR_SPACE, STATE_END},
+                                                                       }},
+                                                                      {STATE_EXP,
+                                                                       {
+                                                                           {CHAR_NUMBER, STATE_EXP_NUMBER},
+                                                                           {CHAR_SIGN, STATE_EXP_SIGN},
+                                                                       }},
+                                                                      {STATE_EXP_SIGN,
+                                                                       {
+                                                                           {CHAR_NUMBER, STATE_EXP_NUMBER},
+                                                                       }},
+                                                                      {STATE_EXP_NUMBER,
+                                                                       {
+                                                                           {CHAR_NUMBER, STATE_EXP_NUMBER},
+                                                                           {CHAR_SPACE, STATE_END},
+                                                                       }},
+                                                                      {STATE_END,
+                                                                       {
+                                                                           {CHAR_SPACE, STATE_END},
+                                                                       }}};
+        int len = s.length();
+        State st = STATE_INITIAL;
+        for (int i = 0; i < s.length(); i++) {
+            CharType typ = toCharType(s[i]);
+            if (transfer[st].find(typ) == transfer[st].end()) {
+                return false; // 没有找到这条转换
+            } else {
+                st = transfer[st][typ];
+            }
+        }
+        return st == STATE_INTEGER || st == STATE_POINT || st == STATE_FRACTION || st == STATE_EXP_NUMBER || st == STATE_END;
+    }
+}
+
+;
 int main() {
     //
     Solution so;
