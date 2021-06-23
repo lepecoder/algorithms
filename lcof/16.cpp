@@ -20,4 +20,4 @@ class Solution {
         return 1 / res;
     }
 };
-int main() { int n = return 0; }
+int main() { int n = 0; }

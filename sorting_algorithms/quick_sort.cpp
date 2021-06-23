@@ -26,7 +26,7 @@ int main(int argc, char const *argv[]) {
 void quick_sort(vector<int> &nums, int l, int r) {
     if (l + 1 >= r) return;
     int first = l, last = r, key = nums[first];
-    while (first < last) {                                // 利用双指针交替交换元素
+    while (first < last) {                                //这里应该是if                      // 利用双指针交替交换元素
         while (first < last && nums[last] >= key) --last; // 从后向前找到第一个小于key的元素
         nums[first] = nums[last];                         // 此时nums[first]并不会丢失，因为被key记录
         while (first < last && nums[first] <= key) ++first;
