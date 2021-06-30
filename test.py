@@ -1,11 +1,22 @@
-import numpy as np
+# %%
+class C:
+    def run(self):
+        self.a = 1
 
-x = np.array([1, 2, 35, 1, 2, 3, 54, 2, 1, 1, 3, 34])
-a = np.median(x)
-print(type(a))
 
 # %%
-min_ = -2**31
-max_ = 2**31 - 1
-print(min_)
-print(max_)
+c = C()
+c.run()
+c.a = 2
+c.run()
+print(c.a)
+
+# %%
+import numpy as np
+p = np.array([3, 2, 0 * float('inf')])
+try:
+    action = np.random.choice(3, size=1, p=p / sum(p))
+except:
+    print(p)
+    action = 4
+print(action)
