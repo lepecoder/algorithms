@@ -13,10 +13,7 @@ print(c.a)
 
 # %%
 import numpy as np
-p = np.array([3, 2, 0 * float('inf')])
-try:
-    action = np.random.choice(3, size=1, p=p / sum(p))
-except:
-    print(p)
-    action = 4
-print(action)
+a = np.array([1, 2, 3])
+print(a)
+a = np.r_[a, a[-1]]
+print(a)
