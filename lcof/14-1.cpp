@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Solution {
+class Solution1 {
   public:
     int cuttingRope(int n) {
         int dp[n + 1]; // 将k拆分成两个数的最大乘积
@@ -11,6 +11,18 @@ class Solution {
             dp[i] = curmax;
         }
         return dp[n];
+    }
+};
+
+class Solution {
+  public:
+    int cuttingRope(int n) {
+        if (n <= 3) return 1;
+        int y = n % 3;
+        int x = n / 3;
+        if (y == 0) { return x * x * x; }
+        if (y == 1) { return x * x * (x + 1); }
+        if (y == 2) { return x * (x + 1) * (x + 1); }
     }
 };
 int main() {
