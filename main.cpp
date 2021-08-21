@@ -1,15 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
-int *t;
-void fun() {
-    for (int i = 0; i < 5; i++) { cout << t[i] << ' '; }
-}
 int main() {
-    //
-    // CSomething x;
-    // int i = 0;
-    int a[5] = {3, 21, 1, 5, 4};
-    t = a;
-    fun();
+    string line;
+    int num;
+    vector<int> nums;
+    while (getline(cin, line)) {
+        nums.clear();
+        istringstream stream(line);
+        while (stream >> num) { nums.emplace_back(num); }
+        for (int &x : nums) { cout << x << ' '; }
+        cout << endl;
+    }
+
     return 0;
 }
