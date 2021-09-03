@@ -13,7 +13,10 @@ class Solution {
         int n = prices.size();
         int left_min = prices[0];
         int res = 0;
-        for (int i = 1; i < n; i++) { res = max(res, prices[i] - left_min); }
+        for (int i = 1; i < n; i++) {
+            res = max(res, prices[i] - left_min);
+            left_min = min(left_min, prices[i]);
+        }
         return res;
     }
 };
