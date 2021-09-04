@@ -1,16 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
+class A {
+    bool a;   // 1字节
+    short b;  // 2字节，+1
+    int c;    // 4字节，
+    double d; // 8字节
+};
 int main() {
-    string line;
-    int num;
-    vector<int> nums;
-    while (getline(cin, line)) {
-        nums.clear();
-        istringstream stream(line);
-        while (stream >> num) { nums.emplace_back(num); }
-        for (int &x : nums) { cout << x << ' '; }
-        cout << endl;
-    }
-
+    A a;
+    cout << sizeof(a) << endl;
     return 0;
 }
