@@ -1,13 +1,48 @@
-#include <bits/stdc++.h>
+#include <bits/extc++.h>
 using namespace std;
-class A {
-    bool a;   // 1字节
-    short b;  // 2字节，+1
-    int c;    // 4字节，
-    double d; // 8字节
+
+class E {
+  public:
+    E() { cout << "E\n"; }
+    ~E() { cout << "~E\n"; }
 };
-int main() {
+class D {
+  public:
+    D() { cout << "D\n"; }
+    ~D() { cout << "~D\n"; }
+};
+
+class A {
+  public:
+    A() { cout << "A\n"; }
+    virtual ~A() { cout << "~A\n"; }
+
+    //   private:
+    // E d;
+};
+
+class B : public A {
+  public:
+    B() { cout << "B\n"; }
+    ~B() { cout << "~B\n"; }
+
+  private:
     A a;
-    cout << sizeof(a) << endl;
+};
+
+class C : public A, public B {
+  public:
+    C() { cout << "C\n"; }
+    ~C() { cout << "~C\n"; }
+
+  private:
+    D a;
+};
+
+int main() {
+    //
+    C *p = new C;
+    delete p;
+    // A *a = new A;
     return 0;
 }
