@@ -1,48 +1,61 @@
 #include <bits/extc++.h>
+
 using namespace std;
 
-class E {
-  public:
-    E() { cout << "E\n"; }
-    ~E() { cout << "~E\n"; }
-};
-class D {
-  public:
-    D() { cout << "D\n"; }
-    ~D() { cout << "~D\n"; }
-};
+string buff;
+bool isempty = true;
+bool iseof = false;
+mutex mtx;
+condition_variable cv;
 
-class A {
-  public:
-    A() { cout << "A\n"; }
-    virtual ~A() { cout << "~A\n"; }
+void read1() {
+    ifstream infile("./in.txt");
+    string tmp;
+    while (!infile.eof()) {
+        getline(infile, tmp);
+        unique_lock<mutex> lk(mtx);
+        cv.wait(lk, [&] { return isempty == true; });
+        buff = tmp;
+        cout << "read " << buff << endl;
+        isempty = false;
+        lk.unlock();
+        cv.notify_one();
+    }
+    iseof = true;
+    buff.clear();
+    isempty = false;
+    infile.close();
+    cout << "read exit \n";
+}
 
-    //   private:
-    // E d;
-};
-
-class B : public A {
-  public:
-    B() { cout << "B\n"; }
-    ~B() { cout << "~B\n"; }
-
-  private:
-    A a;
-};
-
-class C : public A, public B {
-  public:
-    C() { cout << "C\n"; }
-    ~C() { cout << "~C\n"; }
-
-  private:
-    D a;
-};
+void write1() {
+    ofstream outfile("./out.txt");
+    string tmp;
+    while (true) {
+        unique_lock<mutex> lk(mtx);
+        cv.wait(lk, [&] { return isempty == false; });
+        outfile << buff << endl;
+        cout << "write " << buff << endl;
+        isempty = true;
+        lk.unlock();
+        cv.notify_one();
+        // if (buff.empty()) break;
+        if (iseof) break;
+    }
+    isempty = true;
+    outfile.close();
+    cout << "write exit \n";
+}
 
 int main() {
     //
-    C *p = new C;
-    delete p;
-    // A *a = new A;
+    buff.clear();
+    isempty = true;
+    iseof = false;
+    int a = 1;
+    std::thread t1(read1);
+    std::thread t2(write1);
+    t1.join();
+    t2.join();
     return 0;
 }
