@@ -3,6 +3,6 @@ using namespace std;
 typedef long long ll;
 
 int main() {
-    //
-    int return 0;
+    // 小红点点点
+    return 0;
 }
