@@ -5,8 +5,20 @@ using namespace std;
     for (int i = idx; i < n; i++) cout << x[i] << ' ';                                                                                                         \
     cout << endl;
 
-int main() {
+int
+
+    int
+    main() {
     //
-    cout << __gcd(3, 3);
+    int n, q;
+    string s;
+    cin >> n >> q;
+    while (q--) {
+        cin >> s;
+        res = 0;
+        fun(s, n);
+        cout << res << endl;
+        cout << s << endl;
+    }
     return 0;
 }

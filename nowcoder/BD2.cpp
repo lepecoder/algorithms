@@ -7,6 +7,23 @@ using namespace std;
 
 int main() {
     //
-    cout << __gcd(3, 3);
+    int T;
+    int n;
+    cin >> T;
+    int res = 0;
+    int a, b;
+    while (T--) {
+        res = 0;
+        cin >> n;
+        for (a = 1; a < sqrt(n); a++) {
+            if (n % a != 0) continue;
+            b = n / a;
+            if (__gcd(a, b) == 1) {
+                // cout << a << ',' << b << endl;
+                res++;
+            }
+        }
+        cout << res << endl;
+    }
     return 0;
 }

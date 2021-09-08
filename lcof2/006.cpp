@@ -5,8 +5,15 @@ using namespace std;
     for (int i = idx; i < n; i++) cout << x[i] << ' ';                                                                                                         \
     cout << endl;
 
+class Solution {
+  public:
+    vector<int> twoSum(vector<int> &numbers, int target) {
+        int n = numbers.size();
+        unordered_set<int> st;
+        st.reserve(n);
+        for (int i =) }
+};
 int main() {
     //
-    cout << __gcd(3, 3);
     return 0;
 }
