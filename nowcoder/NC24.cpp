@@ -7,6 +7,7 @@ using namespace std;
  *	struct ListNode *next;
  * };
  */
+
 struct ListNode {
     int val;
     ListNode *next;
@@ -14,6 +15,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+
 class Solution {
   public:
     /**
@@ -45,10 +47,24 @@ class Solution {
             p = t;
         }
         p->next = nullptr;
+        if (head == nullptr) return nullptr;
+        ListNode *dummy = new ListNode(head->val + 1, head);
+        // int pre = dummy->val;
+        ListNode *pre = dummy;
+        ListNode *p = head;
+        while (p) {
+            if (p->next == nullptr || p->val == p->next->val) {
+                pre->next = p;
+                pre = p;
+            } else {
+                // 滑动到下一个和p->val值不同的节点
+                int x = p->val;
+                while (p->val == x) p = p->next;
+                pre->next = p;
+                pre = p;
+            }
+            p = p->next;
+        }
         return dummy->next;
     }
 };
-int main() {
-    //
-    return 0;
-}
