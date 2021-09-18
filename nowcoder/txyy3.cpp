@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
+
 class Solution {
   public:
     /**
@@ -11,6 +12,7 @@ class Solution {
      * @param k int整型
      * @return long长整型
      */
+    friend void Time(const Solution a, const Solution b);
     long long minM(int n, int k) {
         // k进制，1-m出现了n个1
 
@@ -19,9 +21,18 @@ class Solution {
         // k进制m位最多包含0-k^m-1
         int m = 1;
         while (pow(k, m) - 1 < n) m++;
-        for (int) }
-};
-int main() {
-    //
-    return 0;
-}
+        return 1;
+    };
+
+  protected:
+    int a;
+
+  private:
+    char ccc;
+    friend void Time(const Solution a, const Solution b) { a.ccc; }
+    int main() {
+        //
+        Solution so;
+        so.a;
+        return 0;
+    }
