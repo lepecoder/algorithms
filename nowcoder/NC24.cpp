@@ -25,6 +25,28 @@ class Solution {
      */
     ListNode *deleteDuplicates(ListNode *head) {
         // write code here
+        ListNode *dummy = new ListNode(0);
+        ListNode *p = dummy;
+        while (head != nullptr && head->next != nullptr) {
+            if (head->val != head->next->val) {
+                ListNode *t = new ListNode(head->val);
+                p->next = t;
+                p = t;
+            } else {
+                int x = head->val;
+                while (head != nullptr && head->val == x) head = head->next;
+                ListNode *t = new ListNode(head->val);
+                p->next = t;
+                p = t;
+            }
+            head = head->next;
+        }
+        if (head) {
+            ListNode *t = new ListNode(head->val);
+            p->next = t;
+            p = t;
+        }
+        p->next = nullptr;
         if (head == nullptr) return nullptr;
         ListNode *dummy = new ListNode(head->val + 1, head);
         // int pre = dummy->val;
@@ -46,7 +68,3 @@ class Solution {
         return dummy->next;
     }
 };
-int main() {
-    //
-    return 0;
-}

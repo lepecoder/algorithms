@@ -1,11 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
+
+//
+int _IO = []() {
+    std::ios::sync_with_stdio(0);
+    cin.tie(0); // cout.tie(0);
+    return 0;
+}();
 int ans = 0;
 void install(int x, bool bs[], int a[]) {
     if (bs[x] == true) return;
     ans++;
     bs[x] = true;
+    stack<int> st;
+    st.emplace(x);
+    while (!st.empty()) {}
     install(a[x], bs, a);
 }
 void uninstall(int x, bool bs[], vector<vector<int>> &uni) {
