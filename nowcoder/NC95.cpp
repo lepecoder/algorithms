@@ -20,6 +20,8 @@ class Solution {
             if (arr[i] == arr[i - 1] + 1) {
                 dp[i] = dp[i - 1] + 1;
                 res = max(res, dp[i]);
+            } else if (arr[i] == arr[i - 1]) {
+                dp[i] = dp[i - 1];
             } else {
                 dp[i] = 1;
             }
