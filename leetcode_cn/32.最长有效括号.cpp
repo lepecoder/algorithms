@@ -12,17 +12,23 @@ class Solution {
   public:
     int longestValidParentheses(string s) {
         int res = 0;
-        stack<int> st;
+
+        int left_c = 0;
+        int t = 0;
         for (char c : s) {
-            if (c == '(')
-                st.emplace('(');
-            else {
-                if (!st.empty() && st.top() == '(') {
-                    st.pop();
-                    res += 2;
+            if (c == '(') {
+                left_c++;
+            } else {               // 右括号
+                if (left_c == 0) { // 有效括号重新开始
+                    res = max(res, t);
+                    t = 0;
+                } else {
+                    left_c--;
+                    t += 2;
                 }
             }
         }
+        res = max(res, t);
         return res;
     }
 };
