@@ -29,7 +29,20 @@ struct TreeNode {
 };
 class Solution {
   public:
-    int maxPathSum(TreeNode *root) {}
+    int res = INT_MIN;
+    int fun(TreeNode *r) {
+        if (r == nullptr) return 0;
+        int left = max(fun(r->left), 0);
+        int right = max(fun(r->right), 0);
+        int x = r->val + left + right;
+        res = max(x, res);
+        int res = r->val + max(left, right);
+        return res;
+    }
+    int maxPathSum(TreeNode *root) {
+        fun(root);
+        return res;
+    }
 };
 // @lc code=end
 

@@ -12,6 +12,7 @@ class Solution {
   public:
     int longestValidParentheses(string s) {
         int res = 0;
+
         int left_c = 0;
         int t = 0;
         for (char c : s) {
