@@ -5,9 +5,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <map>
-#include <unordered_map>
-#include <algorithm>
 #include "algm/algm.h"
 using namespace std;
 // @test([3,1,3,6])=false

@@ -585,3 +585,4 @@ string serializeTreeNodeArr(vector<TreeNode *> &arr)
     }
     return "[" + out + "]";
 }
+>>>>>>> a12f0b29c40e57472c725840d0c3af08cd2f46eb
