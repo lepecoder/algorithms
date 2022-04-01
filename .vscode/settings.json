@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "limits": "cpp",
+        "type_traits": "cpp"
+    },
+    "python.linting.enabled": true,
+    "python.linting.mypyEnabled": false,
+    "python.linting.pylintEnabled": false,
+    "python.linting.banditEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "autopep8",
+    "python.pythonPath": "C:\\Users\\lxp\\scoop\\apps\\miniconda3\\current\\python.exe"
+}
