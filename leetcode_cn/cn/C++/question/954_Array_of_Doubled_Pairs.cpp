@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include "algm/algm.h"
+#include <map>
 using namespace std;
 // @test([3,1,3,6])=false
 // @test([2,1,2,6])=false
@@ -14,18 +15,9 @@ using namespace std;
 class Solution {
 public:
     bool canReorderDoubled(vector<int>& arr) {
-        unordered_map<int,int> h;
-        for (int x:arr) {
-            h[x]++;
+        map<int,int> mp;
+        for(auto x:arr){
+            cout << x;
         }
-        vector<int>v;
-        v.reserve(h.size());
-        for(auto [x,_]:h){v.push_back(x);};
-        sort(v.begin(), v.end(), [](int a,int b){return abs(a)<abs(b);});
-        for(int x:v){
-            if(h[2*x] < h[x]) return false;
-            else h[2*x] -= h[x];
-        }
-        return true;
     }
 };
